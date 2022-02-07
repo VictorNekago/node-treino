@@ -44,27 +44,18 @@ const sensorModel = sequelize.define('dados_sensores', {
 
 
 
-let db = [
-    { Nome: 'Sensor 1', Tamanho: '3,3,3', Tensao: '3', Marca: 'A1', Tipo: 'temperatura' },
-    { Nome: 'Sensor 2', Tamanho: '1,2,2', Tensao: '1,5', Marca: 'B3', Tipo: 'corrente elétrica' },
-    { Nome: 'Sensor 3', Tamanho: '3,3,3', Tensao: '1,5', Marca: 'T10', Tipo: 'pressão' }
-]
+
 
 routes.get('/', (req, res) => {
 
-    //  execSQLQuery('SELECT * FROM dados_sensores', res);
 
 
-    // try {
-    //     let response = sequelize.query("SELECT * FROM dados_sensores");
-    //     return res.json(response);
+    sensorModel.findAll({ raw: true }).then(function (data) {
+        return res.json(data)
+
+    });
 
 
-    // } catch (error) {
-    //     console.log(error);
-    // }
-
-    return res.json(db)
 })
 
 
@@ -125,13 +116,7 @@ routes.delete('/:id', (req, res) => {
 
 
 
-    // let newDB = db.filter(item => {
-    //     if (!item[id])
-    //         return item
-    // })
 
-    // db = newDB
-    // return res.send(newDB)
 })
 
 
