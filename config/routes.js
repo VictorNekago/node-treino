@@ -51,8 +51,24 @@ let db = [
 ]
 
 routes.get('/', (req, res) => {
+
+    //  execSQLQuery('SELECT * FROM dados_sensores', res);
+
+
+    // try {
+    //     let response = sequelize.query("SELECT * FROM dados_sensores");
+    //     return res.json(response);
+
+
+    // } catch (error) {
+    //     console.log(error);
+    // }
+
     return res.json(db)
 })
+
+
+
 
 
 routes.post("/add", (req, res) => {
@@ -95,13 +111,32 @@ routes.post("/add", (req, res) => {
 
 routes.delete('/:id', (req, res) => {
     const id = req.params.id
-    let newDB = db.filter(item => {
-        if (!item[id])
-            return item
-    })
 
-    db = newDB
-    return res.send(newDB)
+
+    try {
+        let response = sequelize.query(`DELETE FROM dados_sensores WHERE id = ${id}`);
+        res.json(response);
+
+    } catch (error) {
+        console.log(error);
+    }
+
+
+
+
+
+    // let newDB = db.filter(item => {
+    //     if (!item[id])
+    //         return item
+    // })
+
+    // db = newDB
+    // return res.send(newDB)
 })
+
+
+
+
+
 
 module.exports = routes
